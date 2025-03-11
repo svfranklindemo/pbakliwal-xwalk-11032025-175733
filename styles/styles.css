@@ -73,7 +73,7 @@ body.appear {
 }
 
 header {
-  height: calc(var(--nav-height) + 25px);
+  height: calc(var(--nav-height));
 }
 
 main {
@@ -291,6 +291,13 @@ img {
 
   .section > div {
     max-width: 1200px;
+    margin: auto;
+  }
+}
+@media (min-width: 1440px) {
+
+  .section > div {
+    max-width: 1440px;
     margin: auto;
   }
 }

@@ -255,6 +255,13 @@ export function decorateBlock(block) {
     const section = block.closest('.section');
     if (section) section.classList.add(`${shortBlockName}-container`);
   }
+
+  //iterate over all the blocks with the same shortBlockName and add attribute data-blockcount to the block which increments starting from 0
+  const blocks = document.querySelectorAll(`.${shortBlockName}`);
+  blocks.forEach((block, index) => {
+    // set id with shortBlockName and blockcount
+    block.id = `${shortBlockName}-${index}`;
+  });
 }
 
 /**

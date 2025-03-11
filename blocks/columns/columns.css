@@ -6,7 +6,6 @@
 .columns img {
     width: 100%;
     height: 250px;
-    border-radius: 50%;
 }
 
 @media (min-width: 900px) {
@@ -24,4 +23,8 @@
     .columns > div > div:first-of-type {
         margin-left: unset;
     }
+}
+
+.columns  p.button-container  {
+    text-align: center;
 }
