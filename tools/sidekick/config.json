@@ -24,6 +24,11 @@
       "passConfig": true,
       "environments": [ "preview", "live", "edit" ],
       "includePaths": ["**.docx**"]
+    },
+    {
+      "id":"uploadAssetsBtn",
+      "title":"Upload Assets",
+      "event":"uploadAssets"
     }
   ]
 }
