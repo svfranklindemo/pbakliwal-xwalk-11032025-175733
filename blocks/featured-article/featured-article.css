@@ -9,6 +9,37 @@
     margin-bottom: 1em;
 }
 
+/* Odd-numbered featured articles */
+.featured-article-container .featured-article-wrapper:nth-child(odd) .featured-article {
+    flex-direction: row;
+}
+
+/* even-numbered featured articles */
+.featured-article-container .featured-article-wrapper:nth-child(even) .featured-article {
+    flex-direction: row-reverse;
+}
+
+/* Odd-numbered featured articles - adjust border radius for image */
+.featured-article-container .featured-article-wrapper:nth-child(odd) .featured-article .image img {
+    border-radius: 4% 0 0 4%;
+}
+
+/* Odd-numbered featured articles - adjust border radius for text */
+.featured-article-container .featured-article-wrapper:nth-child(odd) .featured-article .text {
+    border-radius: 0 4% 4% 0;
+}
+
+/* even-numbered featured articles - adjust border radius for image */
+.featured-article-container .featured-article-wrapper:nth-child(even) .featured-article .image img {
+    border-radius: 0 4% 4% 0;
+    
+}
+
+/* even-numbered featured articles - adjust border radius for text */
+.featured-article-container .featured-article-wrapper:nth-child(even) .featured-article .text {
+    border-radius: 4% 0 0 4%;
+}
+
 .featured-article .image {
     display: flex;
     -webkit-box-orient: vertical;
