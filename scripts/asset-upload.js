@@ -14,7 +14,7 @@ export function uploadAsset() {
     };
 
     //const payload = { ...defaultPayload, ...updates };
-    console.log("payload for assets:", payload);
+    console.log("payload for assets:", defaultPayload);
 
     return fetch('https://localhost:9080/api/v1/web/dx-excshell-1/assets', {
         method: 'POST',
