@@ -1,4 +1,4 @@
-export function uploadAsset(updates) {
+export function uploadAsset() {
     const defaultPayload = {
         projectName: "defaultName",
         type: "xwlak-copilot-assisted",
@@ -13,7 +13,7 @@ export function uploadAsset(updates) {
         ]
     };
 
-    const payload = { ...defaultPayload, ...updates };
+    //const payload = { ...defaultPayload, ...updates };
     console.log("payload for assets:", payload);
 
     return fetch('https://localhost:9080/api/v1/web/dx-excshell-1/assets', {
@@ -21,7 +21,7 @@ export function uploadAsset(updates) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(defaultPayload)
     })
     .then(response => response.json())
     .then(data => {
