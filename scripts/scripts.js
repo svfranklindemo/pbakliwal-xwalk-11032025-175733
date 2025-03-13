@@ -25,7 +25,6 @@ import {
   setupAnalyticsTrackingWithAlloy,
 } from './analytics/lib-analytics.js';
 
-import{uploadAssets} from './post-handler.js';
 import { uploadAsset } from './asset-upload.js';
 
 // Define an execution context
