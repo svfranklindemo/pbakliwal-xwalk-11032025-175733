@@ -25,6 +25,9 @@ import {
   setupAnalyticsTrackingWithAlloy,
 } from './analytics/lib-analytics.js';
 
+import{uploadAssets} from './post-handler.js';
+import { uploadAsset } from './asset-upload.js';
+
 // Define an execution context
 const pluginContext = {
   getAllMetadata,
@@ -375,3 +378,21 @@ sampleRUM.always.on('convert', (data) => {
 });
 
 loadPage();
+
+const uploadAssets = ({ detail }) => {
+  const sk = detail.data;
+  console.log("asset-upload");
+  uploadAsset(null);
+};
+
+const sk = document.querySelector('helix-sidekick');
+if (sk) {
+  // sidekick already loaded
+  sk.addEventListener('custom:uploadAssets', uploadAssets);
+} else {
+  // wait for sidekick to be loaded
+  document.addEventListener('sidekick-ready', () => {
+    document.querySelector('helix-sidekick')
+      .addEventListener('custom:uploadAssets', uploadAssets);
+  }, { once: true });
+}
