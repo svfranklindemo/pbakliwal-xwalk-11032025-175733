@@ -16,11 +16,10 @@ export function uploadAsset(updates) {
     const payload = { ...defaultPayload, ...updates };
     console.log("payload for assets:", payload);
 
-    return fetch('https://example.com/api/upload', {
+    return fetch('https://localhost:9080/api/v1/web/dx-excshell-1/assets', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${updates.token}`
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
     })
