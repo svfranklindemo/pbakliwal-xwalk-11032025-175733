@@ -16,20 +16,49 @@ export function uploadAsset() {
     //const payload = { ...defaultPayload, ...updates };
     console.log("payload for assets:", defaultPayload);
 
-    return fetch('https://localhost:9080/api/v1/web/dx-excshell-1/assets', {
+    // First try with CORS mode
+    return fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Origin': window.location.origin
         },
         body: JSON.stringify(defaultPayload)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('CORS request failed:', error);
+        // If CORS fails, try with no-cors mode
+        console.log('Attempting no-cors mode...');
+        return fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(defaultPayload)
+        })
+        .then(response => {
+            // With no-cors, we can't read the response
+            console.log('Request sent in no-cors mode')
+            console.log('response from upload:', response);
+            return { status: 'sent', message: 'Request sent in no-cors mode' };
+        });
+    })
     .then(data => {
         console.log('Success:', data);
         return data;
     })
     .catch(error => {
-        console.error('Error:', error);
+        console.error('All attempts failed:', error);
         throw error;
     });
 }
