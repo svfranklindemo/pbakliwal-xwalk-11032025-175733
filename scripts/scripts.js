@@ -379,20 +379,21 @@ sampleRUM.always.on('convert', (data) => {
 
 loadPage();
 
-const uploadAssets = ({ detail }) => {
-  const sk = detail.data;
-  console.log("asset-upload");
+const doUploadAssets = ({ detail: payload }) => {
+  console.log('a custom event happened', payload);
+  // your custom code goes here
   uploadAsset(null);
 };
 
-const sk = document.querySelector('helix-sidekick');
+const sk = document.querySelector('aem-sidekick');
 if (sk) {
   // sidekick already loaded
-  sk.addEventListener('custom:uploadAssets', uploadAssets);
+    sk.addEventListener('custom:uploadAssets', doUploadAssets);
 } else {
   // wait for sidekick to be loaded
   document.addEventListener('sidekick-ready', () => {
-    document.querySelector('helix-sidekick')
-      .addEventListener('custom:uploadAssets', uploadAssets);
+    // sidekick now loaded
+    document.querySelector('aem-sidekick')
+      .addEventListener('custom:uploadAssets', doUploadAssets);
   }, { once: true });
 }
