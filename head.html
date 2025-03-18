@@ -1,19 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<script>
-const domain = (window.location.search ||'').includes('copilot-prod') ? 'copilot.adobedemo.com'  : 'copilot-stage.adobedemo.com';
-const link  = document.createElement('link');
-link.id   = 'copilot-editor-css';
-link.rel  = 'stylesheet'
-link.type = 'text/css'
-link.href = `https://${domain}/editor/editor.css`
-link.media = 'all'
-document.head.appendChild(link)
-const script = document.createElement('script')
-script.id   = 'copilot-editor-script';
-script.type = 'module'
-script.src = `https://${domain}/editor/editor.js`
-document.body.appendChild(script)
-</script>
+<script src="/scripts/copilot-init.js" type="module" defer></script>
 <script src="/scripts/scripts.js" type="module"></script>
 <link rel="stylesheet" href="/styles/styles.css"/>
 <link rel="icon" href="data:,">
