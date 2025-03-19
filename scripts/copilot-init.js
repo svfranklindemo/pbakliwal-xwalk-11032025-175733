@@ -1,6 +1,6 @@
 // Check if copilot parameter exists in URL
 const urlParams = new URLSearchParams(window.location.search);
-const shouldLoadCopilot = urlParams.has('copilotEditor');
+const shouldLoadCopilot = urlParams.has('copilotEditor' || 'copilotPreview');
 
 if (shouldLoadCopilot) {
     // Initialize copilot when DOM is ready
