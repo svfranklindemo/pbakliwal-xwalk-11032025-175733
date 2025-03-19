@@ -68,5 +68,5 @@ if (shouldLoadCopilot) {
         document.dispatchEvent(new Event('DOMContentLoaded'));
     }
 } else {
-    console.log('Copilot not enabled. Add ?copilot or ?copilot=prod to URL to enable.');
+    console.log('Copilot not enabled.');
 } 
