@@ -256,11 +256,23 @@ export function decorateBlock(block) {
     if (section) section.classList.add(`${shortBlockName}-container`);
   }
 
-  //iterate over all the blocks with the same shortBlockName and add attribute data-blockcount to the block which increments starting from 0
+  // Set block ID with shortBlockName and index
   const blocks = document.querySelectorAll(`.${shortBlockName}`);
   blocks.forEach((block, index) => {
-    // set id with shortBlockName and blockcount
     block.id = `${shortBlockName}-${index}`;
+    
+    // Add indexed IDs to images within the block
+    const images = block.querySelectorAll('img');
+    images.forEach((img, imgIndex) => {
+      const imgId = `${shortBlockName}-${index}-img-${imgIndex}`;
+      img.id = imgId;
+      
+      // If image is inside a picture element, also add a data attribute to the picture
+      const picture = img.closest('picture');
+      if (picture) {
+        picture.setAttribute('data-img-id', imgId);
+      }
+    });
   });
 }
 
