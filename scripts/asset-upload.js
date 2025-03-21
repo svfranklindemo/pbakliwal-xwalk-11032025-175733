@@ -1,5 +1,24 @@
 import { showLoader, hideLoader, showPopup } from './ui-utils.js';
 
+// Function to get the authentication token
+const getAuthToken = () => {
+    try {
+        const tokenKey = 'adobeid_ims_access_token/demo-copilot/false/AdobeID,openid';
+        const tokenData = localStorage.getItem(tokenKey);
+        
+        if (!tokenData) {
+            console.error('No token found in localStorage');
+            return null;
+        }
+
+        const parsedToken = JSON.parse(tokenData);
+        return parsedToken.tokenValue;
+    } catch (error) {
+        console.error('Error parsing token from localStorage:', error);
+        return null;
+    }
+};
+
 // Function to extract project and demo IDs from URL parameter
 const extractIds = (paramValue) => {
     if (!paramValue) return null;
@@ -16,7 +35,17 @@ const extractIds = (paramValue) => {
 // Function to fetch project data from API
 const fetchProjectData = async (projectId) => {
     try {
-        const response = await fetch(`https://btci3qnv43.execute-api.us-east-1.amazonaws.com/projects/${projectId}`);
+        const token = getAuthToken();
+        if (!token) {
+            throw new Error('Authentication token not found');
+        }
+
+        const response = await fetch(`https://btci3qnv43.execute-api.us-east-1.amazonaws.com/projects/${projectId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -84,6 +113,15 @@ const getPayloadUpdates = async () => {
 export async function uploadAsset() {
     try {
         showLoader();
+        
+        // Check for token before proceeding
+        const token = getAuthToken();
+        if (!token) {
+            hideLoader();
+            showPopup('Authentication token not found. Please log in again.', 'notice');
+            return { status: 'error', message: 'Authentication token not found' };
+        }
+
         // Get updates from API
         const updates = await getPayloadUpdates();
         
@@ -104,6 +142,7 @@ export async function uploadAsset() {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
                 'Origin': window.location.origin
             },
             body: JSON.stringify(updates)
@@ -128,7 +167,8 @@ export async function uploadAsset() {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(updates)
             });
