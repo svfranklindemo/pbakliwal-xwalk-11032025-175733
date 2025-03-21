@@ -381,7 +381,7 @@ loadPage();
 const doUploadAssets = ({ detail: payload }) => {
   console.log('a custom event happened', payload);
   // your custom code goes here
-  uploadAsset(null);
+  uploadAsset();
 };
 
 const sk = document.querySelector('aem-sidekick');
