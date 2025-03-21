@@ -61,10 +61,11 @@ const processEdits = (demo) => {
     if (!demo || !demo.edits) return null;
 
     return demo.edits.map(edit => ({
-        importedUrl: edit.sourceURL || '',
-        pathToModify: edit.xpath || '',
+        importedUrl: edit.sourceUrl || '',
+        pathToModify: edit.targetInfo.xPath || '',
         name: edit.sourceImageId || '',
-        originalEdit: edit // Keep the original edit data for reference
+        originalEdit: edit,
+        editId: edit.id // Keep the original edit data for reference
     }));
 };
 
@@ -111,6 +112,7 @@ const getPayloadUpdates = async () => {
 };
 
 export async function uploadAsset() {
+    let updates; // Declare updates in the outer scope
     try {
         showLoader();
         
@@ -123,7 +125,7 @@ export async function uploadAsset() {
         }
 
         // Get updates from API
-        const updates = await getPayloadUpdates();
+        updates = await getPayloadUpdates(); // Remove const as it's declared above
         
         // Return early if no updates are available
         if (!updates) {
@@ -162,11 +164,19 @@ export async function uploadAsset() {
         // If CORS fails, try with no-cors mode
         console.log('Attempting no-cors mode...');
         try {
+            // Get token again in case it expired
+            const token = getAuthToken();
+            if (!token || !updates) { // Check both token and updates
+                hideLoader();
+                showPopup('Failed to upload assets: Missing data', 'notice');
+                throw new Error('Missing token or updates data');
+            }
+
             const response = await fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(updates)
             });
