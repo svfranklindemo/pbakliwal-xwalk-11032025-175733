@@ -142,7 +142,6 @@ export async function uploadAsset() {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
                 'Origin': window.location.origin
             },
             body: JSON.stringify(updates)
@@ -168,7 +167,6 @@ export async function uploadAsset() {
                 mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(updates)
             });
