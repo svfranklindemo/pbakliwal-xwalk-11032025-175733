@@ -19,6 +19,34 @@ const getAuthToken = () => {
     }
 };
 
+// Function to get user LDAP from session storage
+const getUserLdap = () => {
+    try {
+        const profileKey = 'adobeid_ims_profile/demo-copilot/false/AdobeID,openid';
+        const profileData = sessionStorage.getItem(profileKey);
+        
+        if (!profileData) {
+            console.error('No profile data found in sessionStorage');
+            return null;
+        }
+
+        const parsedProfile = JSON.parse(profileData);
+        const email = parsedProfile.email;
+        
+        if (!email) {
+            console.error('No email found in profile data');
+            return null;
+        }
+
+        // Extract LDAP from email (assuming format: ldap@adobe.com)
+        const ldap = email.split('@')[0];
+        return ldap;
+    } catch (error) {
+        console.error('Error parsing profile data from sessionStorage:', error);
+        return null;
+    }
+};
+
 // Function to extract project and demo IDs from URL parameter
 const extractIds = (paramValue) => {
     if (!paramValue) return null;
@@ -98,10 +126,16 @@ const getPayloadUpdates = async () => {
             return null;
         }
 
+        const userLdap = getUserLdap();
+        if (!userLdap) {
+            console.error('Could not retrieve user LDAP');
+            return null;
+        }
+
         return {
             projectName: projectData.name || "defaultName",
             type: "xwlak-copilot-assisted",
-            userLdap: "pbakliwal",
+            userLdap: userLdap,
             aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
             images: updates
         };
