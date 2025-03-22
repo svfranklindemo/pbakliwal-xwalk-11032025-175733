@@ -27,7 +27,7 @@ const getUserLdap = () => {
         
         if (!profileData) {
             console.error('No profile data found in sessionStorage');
-            return null;
+            return 'pbakliwal';
         }
 
         const parsedProfile = JSON.parse(profileData);
@@ -35,7 +35,7 @@ const getUserLdap = () => {
         
         if (!email) {
             console.error('No email found in profile data');
-            return null;
+            return 'pbakliwal';
         }
 
         // Extract LDAP from email (assuming format: ldap@adobe.com)
