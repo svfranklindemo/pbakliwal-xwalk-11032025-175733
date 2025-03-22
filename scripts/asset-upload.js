@@ -171,7 +171,7 @@ export async function uploadAsset() {
         console.log("payload for assets:", updates);
 
         // First try with CORS mode
-        const response = await fetch('https://localhost:9080/api/v1/web/dx-excshell-1/assets', {
+        const response = await fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -206,7 +206,7 @@ export async function uploadAsset() {
                 throw new Error('Missing token or updates data');
             }
 
-            const response = await fetch('https://localhost:9080/api/v1/web/dx-excshell-1/assets', {
+            const response = await fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
