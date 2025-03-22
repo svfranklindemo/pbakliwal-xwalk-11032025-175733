@@ -146,7 +146,7 @@ const getPayloadUpdates = async () => {
 };
 
 export async function uploadAsset() {
-    let updates; // Declare updates in the outer scope
+    let updates;
     try {
         showLoader();
         
@@ -159,7 +159,7 @@ export async function uploadAsset() {
         }
 
         // Get updates from API
-        updates = await getPayloadUpdates(); // Remove const as it's declared above
+        updates = await getPayloadUpdates();
         
         // Return early if no updates are available
         if (!updates) {
@@ -170,61 +170,26 @@ export async function uploadAsset() {
 
         console.log("payload for assets:", updates);
 
-        // First try with CORS mode
+        // Send request in no-cors mode
         const response = await fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
             method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
+            mode: 'no-cors',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Origin': window.location.origin
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(updates)
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
+        console.log('Request sent in no-cors mode');
+        console.log('response from upload:', response);
         hideLoader();
-        showPopup('Assets uploaded successfully!', 'success');
-        console.log('Success:', data);
-        return data;
+        showPopup('Assets uploaded successfully', 'success');
+        return { status: 'sent', message: 'Request sent in no-cors mode' };
 
     } catch (error) {
-        console.error('CORS request failed:', error);
-        // If CORS fails, try with no-cors mode
-        console.log('Attempting no-cors mode...');
-        try {
-            // Get token again in case it expired
-            const token = getAuthToken();
-            if (!token || !updates) { // Check both token and updates
-                hideLoader();
-                showPopup('Failed to upload assets: Missing data', 'notice');
-                throw new Error('Missing token or updates data');
-            }
-
-            const response = await fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updates)
-            });
-
-            console.log('Request sent in no-cors mode');
-            console.log('response from upload:', response);
-            hideLoader();
-            showPopup('Assets uploaded in no-cors mode', 'notice');
-            return { status: 'sent', message: 'Request sent in no-cors mode' };
-        } catch (fallbackError) {
-            console.error('All attempts failed:', fallbackError);
-            hideLoader();
-            showPopup('Failed to upload assets. Please try again.', 'notice');
-            throw fallbackError;
-        }
+        console.error('Upload failed:', error);
+        hideLoader();
+        showPopup('Failed to upload assets. Please try again.', 'notice');
+        throw error;
     }
 }
