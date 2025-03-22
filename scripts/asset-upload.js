@@ -84,17 +84,38 @@ const fetchProjectData = async (projectId) => {
     }
 };
 
+// Function to find path to modify based on edit ID
+const getPathToModify = (editId) => {
+    try {
+        // Find element with matching data-demo-copilot-edit-id
+        const element = document.querySelector(`[data-demo-copilot-edit-id="${editId}"]`);
+        if (!element) {
+            console.warn(`No element found with data-demo-copilot-edit-id="${editId}"`);
+            return null;
+        }
+        
+        // Return the ID of the element
+        return element.id || null;
+    } catch (error) {
+        console.error('Error finding path to modify:', error);
+        return null;
+    }
+};
+
 // Function to process edits and create payload updates
 const processEdits = (demo) => {
     if (!demo || !demo.edits) return null;
 
-    return demo.edits.map(edit => ({
-        importedUrl: edit.sourceUrl || '',
-        pathToModify: edit.targetInfo.xPath || '',
-        name: edit.sourceImageId || '',
-        originalEdit: edit,
-        editId: edit.id // Keep the original edit data for reference
-    }));
+    return demo.edits.map(edit => {
+        const pathToModify = getPathToModify(edit.id);
+        return {
+            importedUrl: edit.sourceUrl || '',
+            pathToModify: pathToModify || edit.targetInfo.xPath || '',
+            name: edit.sourceImageId || '',
+            originalEdit: edit,
+            editId: edit.id
+        };
+    });
 };
 
 // Function to get payload updates
