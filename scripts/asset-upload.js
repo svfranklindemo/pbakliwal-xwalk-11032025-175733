@@ -100,9 +100,7 @@ const getResourceType = (pathToModify) => {
         }
 
         const componentName = parts[0];
-        const componentCount = parts[1];
         const childComponentName = parts.length > 2 ? parts[2] : null;
-        const childCount = parts.length > 3 ? parts[3] : null;
         
         // Component filters data - standardize as arrays
         const filterData = {
@@ -168,9 +166,7 @@ const getResourceType = (pathToModify) => {
             resourceType,
             filter,
             model: finalComponentName,
-            childComponent: childComponentName,
-            componentIndex: componentCount,
-            childIndex: childIndex
+            childComponent: childComponentName
         };
 
     } catch (error) {
