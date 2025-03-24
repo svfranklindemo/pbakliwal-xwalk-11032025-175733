@@ -84,6 +84,101 @@ const fetchProjectData = async (projectId) => {
     }
 };
 
+// Function to get resource type from component name
+const getResourceType = (pathToModify) => {
+    try {
+        if (!pathToModify) {
+            console.warn('No pathToModify provided');
+            return null;
+        }
+
+        // Split the pathToModify by '_' and validate parts
+        const parts = pathToModify.split('_');
+        if (parts.length < 2) {
+            console.warn('Invalid pathToModify format');
+            return null;
+        }
+
+        const componentName = parts[0];
+        const componentCount = parts[1];
+        const childComponentName = parts.length > 2 ? parts[2] : null;
+        const childCount = parts.length > 3 ? parts[3] : null;
+        
+        // Component filters data - standardize as arrays
+        const filterData = {
+            "column": ["text", "image", "button", "title"],
+            "activity-details": ["activity-detail"],
+            "accordion": ["accordion-item"],
+            "carousel": ["slide"]
+        };
+
+        // Component definition data with their resource types
+        const componentData = {
+            "text": "core/franklin/components/text/v1/text",
+            "title": "core/franklin/components/title/v1/title",
+            "image": "core/franklin/components/image/v1/image",
+            "button": "core/franklin/components/button/v1/button",
+            "section": "core/franklin/components/section/v1/section",
+            "columns": "core/franklin/components/columns/v1/columns",
+            "hero": "core/franklin/components/block/v1/block",
+            "carousel": "core/franklin/components/block/v1/block",
+            "slide": "core/franklin/components/block/v1/block/item",
+            "accordion": "core/franklin/components/block/v1/block",
+            "accordion-item": "core/franklin/components/block/v1/block/item",
+            "teaser": "core/franklin/components/block/v1/block",
+            "featured-article": "core/franklin/components/block/v1/block",
+            "content-fragment": "core/franklin/components/block/v1/block",
+            "article-content-fragment": "core/franklin/components/block/v1/block",
+            "demo-block": "core/franklin/components/block/v1/block",
+            "workfront-reference": "core/franklin/components/block/v1/block",
+            "embed": "core/franklin/components/block/v1/block",
+            "blockquote": "core/franklin/components/block/v1/block",
+            "article-details": "core/franklin/components/block/v1/block",
+            "activity-detail": "core/franklin/components/block/v1/block/item"
+        };
+
+        // Get the base resource type for the component
+        let resourceType = componentData[componentName];
+        if (!resourceType) {
+            console.warn(`No resource type found for component: ${componentName}`);
+            return null;
+        }
+
+        // Initialize filter and finalComponentName
+        let filter = null;
+        let finalComponentName = componentName;
+
+        // Special handling for columns
+        if (componentName === 'columns' && childComponentName) {
+            // For columns, check if child component is valid
+            if (filterData.column.includes(childComponentName)) {
+                filter = 'columns';
+                finalComponentName = childComponentName;
+                resourceType = componentData[childComponentName];
+            }
+        } else if (filterData[componentName] && componentName !== 'columns') {
+            // For other filter containers, get the filter component name from array
+            const filterComponentName = filterData[componentName][0]; // Get the first (and only) element
+            filter = componentName;
+            finalComponentName = filterComponentName;
+            resourceType = componentData[filterComponentName];
+        }
+
+        return {
+            resourceType,
+            filter,
+            model: finalComponentName,
+            childComponent: childComponentName,
+            componentIndex: componentCount,
+            childIndex: childIndex
+        };
+
+    } catch (error) {
+        console.error('Error in getResourceType:', error);
+        return null;
+    }
+};
+
 // Function to find path to modify based on edit ID
 const getPathToModify = (editId) => {
     try {
@@ -108,12 +203,15 @@ const processEdits = (demo) => {
 
     return demo.edits.map(edit => {
         const pathToModify = getPathToModify(edit.id);
+        
+        const resource = getResourceType(pathToModify);
         return {
             importedUrl: edit.sourceUrl || '',
             pathToModify: pathToModify || edit.targetInfo.xPath || '',
             name: edit.sourceImageId || '',
             originalEdit: edit,
-            editId: edit.id
+            editId: edit.id,
+            resource: resource
         };
     });
 };
