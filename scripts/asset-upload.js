@@ -251,7 +251,7 @@ const getPayloadUpdates = async () => {
             projectName: projectData.name || "defaultName",
             type: "xwlak-copilot-assisted",
             userLdap: userLdap,
-            aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
+            aemURL: "https://author-p24741-e188067.adobeaemcloud.com/",
             images: updates
         };
     } catch (error) {
