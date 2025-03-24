@@ -251,7 +251,7 @@ const getPayloadUpdates = async () => {
             projectName: projectData.name || "defaultName",
             type: "xwlak-copilot-assisted",
             userLdap: userLdap,
-            aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
+            aemURL: "https://author-p103963-e1451488.adobeaemcloud.com/",
             images: updates
         };
     } catch (error) {
@@ -290,7 +290,8 @@ export async function uploadAsset() {
             method: 'POST',
             mode: 'no-cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(updates)
         });
