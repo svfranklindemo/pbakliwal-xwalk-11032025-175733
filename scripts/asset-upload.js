@@ -293,7 +293,7 @@ export async function uploadAsset() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ updates: updates })
+            body: JSON.stringify(updates)
         });
 
         console.log('Request sent in no-cors mode');
