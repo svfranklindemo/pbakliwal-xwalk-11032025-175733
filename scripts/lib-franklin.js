@@ -264,7 +264,7 @@ export function decorateBlock(block) {
     // Add indexed IDs to images within the block
     const images = block.querySelectorAll('img');
     images.forEach((img, imgIndex) => {
-      const imgId = `${shortBlockName}_${index}_imgage_${imgIndex}`;
+      const imgId = `${shortBlockName}_${index}_image_${imgIndex}`;
       img.id = imgId;
       
       // If image is inside a picture element, also add a data attribute to the picture
