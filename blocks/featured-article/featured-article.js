@@ -68,4 +68,22 @@ export default async function decorate($block) {
   }
 
   $block.replaceChildren($image, $text);
+
+  const blocks = document.querySelectorAll(`.featured-article`);
+  blocks.forEach((block, index) => {
+    block.id = `featured-article-${index}`;
+    
+    // Add indexed IDs to images within the block
+    const images = block.querySelectorAll('img');
+    images.forEach((img, imgIndex) => {
+      const imgId = `featured-article_${index}_image_${imgIndex}`;
+      img.id = imgId;
+      
+      // If image is inside a picture element, also add a data attribute to the picture
+      const picture = img.closest('picture');
+      if (picture) {
+        picture.setAttribute('data-img-id', imgId);
+      }
+    });
+  });
 }
