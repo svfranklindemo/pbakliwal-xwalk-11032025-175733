@@ -252,7 +252,8 @@ const getPayloadUpdates = async () => {
             type: "xwlak-copilot-assisted",
             userLdap: userLdap,
             aemURL: "https://author-p142310-e1462720.adobeaemcloud.com/",
-            images: updates
+            images: updates,
+            demoId: targetDemo.id
         };
     } catch (error) {
         console.error('Error getting payload updates:', error);
