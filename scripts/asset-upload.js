@@ -297,10 +297,10 @@ export async function uploadAsset() {
             body: JSON.stringify(updates)
         });
 
-        console.log('Request sent in no-cors mode');
-        console.log('response from upload:', response);
+        let content = await response.text()
+        console.log('content from upload:', content);
         hideLoader();
-        showPopup('Assets uploaded successfully', 'success');
+        showPopup('Uploaded successfully', 'success');
         return { status: 'sent', message: 'Request sent in no-cors mode' };
 
     } catch (error) {
