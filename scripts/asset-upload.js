@@ -253,7 +253,8 @@ const getPayloadUpdates = async () => {
             userLdap: userLdap,
             aemURL: "https://author-p142310-e1462720.adobeaemcloud.com/",
             images: updates,
-            demoId: targetDemo.id
+            demoId: targetDemo.id,
+            pagePath : window.location.pathname
         };
     } catch (error) {
         console.error('Error getting payload updates:', error);
