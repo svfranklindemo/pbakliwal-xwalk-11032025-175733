@@ -247,6 +247,11 @@ const getPayloadUpdates = async () => {
             return null;
         }
 
+        const pagePathVar = window.location.pathname === "/us/en/" 
+            ? "/us/en/index" 
+            : window.location.pathname.endsWith('/') 
+                ? window.location.pathname.slice(0, -1) 
+                : window.location.pathname;
         return {
             projectName: targetDemo.name || "defaultName",
             type: "xwlak-copilot-assisted",
@@ -254,7 +259,7 @@ const getPayloadUpdates = async () => {
             aemURL: "https://author-p142310-e1462720.adobeaemcloud.com/",
             images: updates,
             demoId: targetDemo.id,
-            pagePath : window.location.pathname
+            pagePath: pagePathVar
         };
     } catch (error) {
         console.error('Error getting payload updates:', error);
