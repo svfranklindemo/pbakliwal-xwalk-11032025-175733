@@ -520,6 +520,26 @@ export async function loadBlock(block) {
 }
 
 /**
+ * Loads JS and CSS for a block.
+ * @param {Element} block The block element
+ */
+export async function loadHeadFooterBlock(block) {
+  const status = block.getAttribute('data-block-status');
+  if (status !== 'loading' && status !== 'loaded') {
+    block.setAttribute('data-block-status', 'loading');
+    const { blockName, cssPath, jsPath } = getBlockConfig(block);
+    try {
+      await loadModule(blockName, jsPath, cssPath, block);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`failed to load block ${blockName}`, error);
+    }
+    block.setAttribute('data-block-status', 'loaded');
+    decorateBlock(block);
+  }
+}
+
+/**
  * Loads JS and CSS for all blocks in a container element.
  * @param {Element} main The container element
  */
@@ -679,7 +699,7 @@ export function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);
-  return loadBlock(headerBlock);
+  return loadHeadFooterBlock(headerBlock);
 }
 
 /**
@@ -689,7 +709,7 @@ export function loadFooter(footer) {
   const footerBlock = buildBlock('footer', '');
   footer.append(footerBlock);
   decorateBlock(footerBlock);
-  return loadBlock(footerBlock);
+  return loadHeadFooterBlock(footerBlock);
 }
 
 // Define an execution context for plugins
