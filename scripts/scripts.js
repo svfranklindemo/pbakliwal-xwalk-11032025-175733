@@ -15,6 +15,7 @@ import {
   buildBlock,
   readBlockConfig,
   toClassName,
+  decorateDefaultBlock,
 } from './lib-franklin.js';
 import {
   analyticsTrack404,
@@ -207,6 +208,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateDefaultBlock();
 }
 
 /**

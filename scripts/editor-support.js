@@ -6,6 +6,7 @@ import {
   decorateSections,
   loadBlock,
   loadBlocks,
+  decorateDefaultBlock,
 } from './lib-franklin.js';
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
@@ -75,6 +76,7 @@ async function applyChanges(event) {
           await loadBlocks(parentElement);
           element.remove();
           newSection.style.display = null;
+          decorateDefaultBlock();
         } else {
           element.replaceWith(...newElements);
           decorateButtons(parentElement);

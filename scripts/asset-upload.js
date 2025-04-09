@@ -107,7 +107,8 @@ const getResourceType = (pathToModify) => {
             "column": ["text", "image", "button", "title"],
             "activity-details": ["activity-detail"],
             "accordion": ["accordion-item"],
-            "carousel": ["slide"]
+            "carousel": ["slide"],
+            "section": ["image","text","title","button"]
         };
 
         // Component definition data with their resource types
