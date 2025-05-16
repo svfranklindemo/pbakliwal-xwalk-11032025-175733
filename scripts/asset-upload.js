@@ -270,11 +270,34 @@ const getPayloadUpdates = async () => {
     }
 };
 
+// Function to check if AEM instance is valid and running
+const checkAEMInstance = async () => {
+    try {
+        // Use HEAD request to just check if the image exists and instance is up
+        const response = await fetch('https://publish-p142310-e1462720.adobeaemcloud.com/content/dam/aem-demo-assets/en/adventures/biking-adventure/adobestock-202662329_for_editing.jpg', {
+            method: 'HEAD',
+        });
+        return response.ok && response.status === 200;
+    } catch (error) {
+        console.error('Error checking AEM instance:', error);
+        return false;
+    }
+};
+
+
 export async function uploadAsset() {
     let updates;
     try {
         showLoader();
         
+        //check if AEM instance is valid and running or not 
+        const aemInstance = await checkAEMInstance();
+        if (!aemInstance) {
+            hideLoader();
+            showPopup('AEM instance is not running. Please check the AEM instance. or reach out to LPB team', 'notice');
+            return { status: 'error', message: 'AEM instance is not valid or running' };
+        }
+
         // Check for token before proceeding
         const token = getAuthToken();
         if (!token) {
