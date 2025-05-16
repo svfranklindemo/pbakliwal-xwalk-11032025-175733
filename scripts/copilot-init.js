@@ -1,7 +1,8 @@
+import { uploadAsset } from './asset-upload.js';
 // Check if copilot parameter exists in URL
 const urlParams = new URLSearchParams(window.location.search);
 const shouldLoadCopilot = urlParams.has('copilotEditor') || urlParams.has('copilotPreview');
-
+ 
 if (shouldLoadCopilot) {
     // Initialize copilot when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
@@ -60,6 +61,13 @@ if (shouldLoadCopilot) {
         injectScript();
 
         console.log('Copilot initialization complete');
+
+        document.addEventListener('copilot-publish', (e) => {
+            e.preventDefault();
+            const {projectId, demoId} = e.detail??{};
+            console.log('Copilot publish p:'+projectId + ' d:'+demoId);
+            uploadAsset();
+          })
     });
 
     // Backup initialization in case DOMContentLoaded already fired
