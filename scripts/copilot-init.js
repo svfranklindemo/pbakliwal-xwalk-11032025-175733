@@ -60,7 +60,7 @@ if (shouldLoadCopilot) {
         // Then inject script
         injectScript();
 
-        console.log('Copilot initialization complete');
+        console.log('New Copilot initialization complete');
 
         document.addEventListener('copilot-publish', (e) => {
             e.preventDefault();
