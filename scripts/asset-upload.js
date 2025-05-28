@@ -38,7 +38,7 @@ const getUserLdap = () => {
             return ldap;
         }
 
-        const profileKey2 = 'adobeid_ims_profile/demo-copilot/false/AdobeID,address,cc_files,cc_libraries,creative_sdk,email,openid,profile';
+        const profileKey2 = 'userLdap';
         const profileData2 = sessionStorage.getItem(profileKey2);
         
         if (!profileData2) {
@@ -53,17 +53,6 @@ const getUserLdap = () => {
             const ldap = email2.split('@')[0];
             return ldap;
         }
-
-        // Prompt for LDAP input
-        const ldapInput = prompt('Please enter your LDAP username:');
-        
-        if (!ldapInput) {
-            console.error('No LDAP input provided');
-            return null;
-        }
-
-        // Store in session storage
-        sessionStorage.setItem('userLdap', ldapInput);
 
         // Return LDAP, splitting if it contains @
         return ldapInput.includes('@') ? ldapInput.split('@')[0] : ldapInput;
