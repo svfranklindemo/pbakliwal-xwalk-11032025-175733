@@ -32,8 +32,7 @@ const getUserLdap = () => {
         const parsedProfile = JSON.parse(profileData);
         const email = parsedProfile.email;
         
-        if (!email) {
-            console.error('No email found in profile data');
+        if (email) {
             const ldap = email.split('@')[0];
             return ldap;
         }
