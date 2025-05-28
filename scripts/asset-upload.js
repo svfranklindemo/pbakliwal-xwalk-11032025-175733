@@ -41,21 +41,9 @@ const getUserLdap = () => {
         const profileKey2 = 'userLdap';
         const profileData2 = sessionStorage.getItem(profileKey2);
         
-        if (!profileData2) {
-            console.error('No profile data found in sessionStorage');
-        }
-        
-        const parsedProfile2 = JSON.parse(profileData2);
-        const email2 = parsedProfile2.email;
-        
-        if (!email2) {
-            console.error('No email found in profile data');
-            const ldap = email2.split('@')[0];
-            return ldap;
-        }
 
         // Return LDAP, splitting if it contains @
-        return ldapInput.includes('@') ? ldapInput.split('@')[0] : ldapInput;
+        return profileData2.includes('@') ? profileData2.split('@')[0] : profileData2;
 
         
     } catch (error) {
