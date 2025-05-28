@@ -6,7 +6,7 @@ const shouldLoadCopilot = urlParams.has('copilotEditor') || urlParams.has('copil
 if (shouldLoadCopilot) {
     // Initialize copilot when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('Initializing copilot...');
+        console.log('Initializing New copilot...');
         
         const domain = urlParams.get('copilot') === 'prod' 
             ? 'copilot.adobedemo.com' 
