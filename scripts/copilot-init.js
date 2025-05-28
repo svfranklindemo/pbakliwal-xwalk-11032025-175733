@@ -69,6 +69,7 @@ if (shouldLoadCopilot) {
             uploadAsset();
           })
 
+          if(sessionStorage.getItem('userLdap') === null){
           // Prompt for LDAP input
         const ldapInput = prompt('Please enter your LDAP username:');
         
@@ -79,6 +80,7 @@ if (shouldLoadCopilot) {
 
         // Store in session storage
         sessionStorage.setItem('userLdap', ldapInput);
+    }
     });
 
     // Backup initialization in case DOMContentLoaded already fired
