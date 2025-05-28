@@ -22,21 +22,7 @@ const getAuthToken = () => {
 // Function to get user LDAP from session storage
 const getUserLdap = () => {
     try {
-        const profileKey = 'adobeid_ims_profile/demo-copilot/false/AdobeID,openid';
-        const profileData = sessionStorage.getItem(profileKey);
         
-        if (!profileData) {
-            console.error('No profile data found in sessionStorage');
-        }
-
-        const parsedProfile = JSON.parse(profileData);
-        const email = parsedProfile.email;
-        
-        if (email) {
-            const ldap = email.split('@')[0];
-            return ldap;
-        }
-
         const profileKey2 = 'userLdap';
         const profileData2 = sessionStorage.getItem(profileKey2);
         
