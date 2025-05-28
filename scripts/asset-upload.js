@@ -45,8 +45,8 @@ const getUserLdap = () => {
             console.error('No profile data found in sessionStorage');
         }
         
-        const parsedProfile2 = JSON.parse(profileData);
-        const email2 = parsedProfile.email;
+        const parsedProfile2 = JSON.parse(profileData2);
+        const email2 = parsedProfile2.email;
         
         if (!email2) {
             console.error('No email found in profile data');
