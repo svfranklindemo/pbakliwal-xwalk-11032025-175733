@@ -68,7 +68,7 @@ const fetchProjectData = async (projectId) => {
             throw new Error('Authentication token not found');
         }
 
-        const response = await fetch(`https://xf6x9c9l4l.execute-api.us-east-1.amazonaws.com/${projectId}`, {
+        const response = await fetch(`https://xf6x9c9l4l.execute-api.us-east-1.amazonaws.com/projects/${projectId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json'
