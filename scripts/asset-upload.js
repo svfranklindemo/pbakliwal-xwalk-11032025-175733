@@ -318,8 +318,10 @@ export async function uploadAsset() {
 
         console.log("payload for assets:", updates);
 
+        const prod_url = "https://275323-918sangriatortoise.adobeio-static.net/api/v1/web/dx-excshell-1/assets";
+        const stage_url = "https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets";
         // Send request in no-cors mode
-        const response = await fetch('https://275323-918sangriatortoise-stage.adobeio-static.net/api/v1/web/dx-excshell-1/assets', {
+        const response = await fetch(prod_url, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
