@@ -259,7 +259,7 @@ const getPayloadUpdates = async () => {
             projectName: targetDemo.name || "defaultName",
             type: "xwlak-copilot-assisted",
             userLdap: userLdap,
-            aemURL: "https://author-p142310-e1462720.adobeaemcloud.com/",
+            aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
             images: updates,
             demoId: targetDemo.id,
             pagePath: pagePathVar
@@ -274,7 +274,7 @@ const getPayloadUpdates = async () => {
 const checkAEMInstance = async () => {
     try {
         // Use HEAD request to just check if the image exists and instance is up
-        const response = await fetch('https://publish-p142310-e1462720.adobeaemcloud.com/content/dam/aem-demo-assets/en/adventures/biking-adventure/adobestock-202662329_for_editing.jpg', {
+        const response = await fetch('https://publish-p121371-e1189853.adobeaemcloud.com/content/dam/aem-demo-assets/en/activities/skiing/skitouring.jpg', {
             method: 'HEAD',
         });
         return response.ok && response.status === 200;
