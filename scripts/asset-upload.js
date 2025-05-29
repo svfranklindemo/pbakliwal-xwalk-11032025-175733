@@ -19,20 +19,30 @@ const getAuthToken = () => {
     }
 };
 
-// Function to get user LDAP from session storage
-const getUserLdap = () => {
+// Function to get user LDAP (now returns email from IMS profile)
+const getUserLdap = async () => {
     try {
-        
-        const profileKey2 = 'userLdap';
-        const profileData2 = sessionStorage.getItem(profileKey2);
-        
-
-        // Return LDAP, splitting if it contains @
-        return profileData2.includes('@') ? profileData2.split('@')[0] : profileData2;
-
-        
+        const token = getAuthToken();
+        if (!token) {
+            throw new Error('Authentication token not found');
+        }
+        const response = await fetch('https://ims-na1.adobelogin.com/ims/profile/v1', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-IMS-ClientId': 'demo-copilot',
+            },
+            body: new URLSearchParams({
+                bearer_token: token,
+            }),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const imsProfile = await response.json();
+        return imsProfile.email;
     } catch (error) {
-        console.error('Error parsing profile data from sessionStorage:', error);
+        console.error('Error fetching IMS profile email:', error);
         return null;
     }
 };
@@ -234,7 +244,7 @@ const getPayloadUpdates = async () => {
             return null;
         }
 
-        const userLdap = getUserLdap();
+        const userLdap = await getUserLdap();
         if (!userLdap) {
             console.error('Could not retrieve user LDAP');
             return null;
@@ -273,7 +283,6 @@ const checkAEMInstance = async () => {
         return false;
     }
 };
-
 
 export async function uploadAsset() {
     let updates;
