@@ -64,6 +64,7 @@ if (shouldLoadCopilot) {
 
         document.addEventListener('copilot-publish', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             const {projectId, demoId} = e.detail??{};
             console.log('Copilot publish p:'+projectId + ' d:'+demoId);
             uploadAsset();
