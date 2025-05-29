@@ -40,7 +40,7 @@ const getUserLdap = async () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const imsProfile = await response.json();
-        return imsProfile.email;
+        return imsProfile.email.split('@')[0];
     } catch (error) {
         console.error('Error fetching IMS profile email:', error);
         return null;
