@@ -8,7 +8,7 @@ if (shouldLoadCopilot) {
     document.addEventListener('DOMContentLoaded', () => {
         console.log('Initializing New copilot...');
         
-        const domain = urlParams.get('copilot') === 'prod' 
+        const domain = urlParams.get('copilot-prod') === '1' 
             ? 'copilot.adobedemo.com' 
             : 'stage.copilot.adobedemo.com';
 
