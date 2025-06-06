@@ -359,7 +359,9 @@ const getTargetUrl = async (content) => {
         const repoName = await response.text();
         if (repoName) {
             // Construct the target URL using the repo name
-            return `https://main--${repoName}--svfranklindemo.aem.live/us/en/`;
+            // uncommnet after new IMS
+            //return `https://main--${repoName}--svfranklindemo.aem.live/us/en/`;
+            return null;
         }
         return null;
     } catch (error) {
