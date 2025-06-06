@@ -337,6 +337,38 @@ const updateTargetUrl = async (projectId, demoId,targetUrl) => {
     }
 };
 
+// Function to get the targetUrl by calling an API with the content payload and extracting the repo name
+const getTargetUrl = async (content) => {
+    try {
+        // Use the provided API endpoint to fetch repo name
+        const apiUrl = 'https://275323-918sangriatortoise.adobeio-static.net/api/v1/web/dx-excshell-1/getRepoName';
+        
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': '*/*'
+            },
+            body: JSON.stringify(content)
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Failed to fetch repo name: ${response.status} - ${errorText}`);
+            return null;
+        }
+        const data = await response.json();
+        // Assume the API returns { repo: 'repo-name' }
+        if (data && data.repo) {
+            // Construct the target URL using the repo name (customize as needed)
+            return `https://main--${data.repo}--svfranklindemo.aem.live/us/en/`;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error fetching repo name:', error);
+        return null;
+    }
+};
+
 export async function uploadAsset() {
     let updates;
     try {
@@ -386,7 +418,7 @@ export async function uploadAsset() {
         let content = await response.text()
         console.log('content from upload:', content);
 
-        const targetUrl = content.targetUrl || window.location.origin+window.location.pathname;
+        const targetUrl = await getTargetUrl(updates) || window.location.origin+window.location.pathname;
         //update targetUrl of demo ID using patch request
         await updateTargetUrl(updates.projectId, updates.demoId,targetUrl)
         
