@@ -356,11 +356,10 @@ const getTargetUrl = async (content) => {
             console.error(`Failed to fetch repo name: ${response.status} - ${errorText}`);
             return null;
         }
-        const data = await response.json();
-        // Assume the API returns { repo: 'repo-name' }
-        if (data && data.repo) {
-            // Construct the target URL using the repo name (customize as needed)
-            return `https://main--${data.repo}--svfranklindemo.aem.live/us/en/`;
+        const repoName = await response.text();
+        if (repoName) {
+            // Construct the target URL using the repo name
+            return `https://main--${repoName}--svfranklindemo.aem.live/us/en/`;
         }
         return null;
     } catch (error) {
