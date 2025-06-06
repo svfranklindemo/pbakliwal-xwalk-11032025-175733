@@ -262,7 +262,8 @@ const getPayloadUpdates = async () => {
             aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
             images: updates,
             demoId: targetDemo.id,
-            pagePath: pagePathVar
+            pagePath: pagePathVar,
+            projectId: ids.projectId
         };
     } catch (error) {
         console.error('Error getting payload updates:', error);
@@ -281,6 +282,58 @@ const checkAEMInstance = async () => {
     } catch (error) {
         console.error('Error checking AEM instance:', error);
         return false;
+    }
+};
+
+// Function to update the targetUrl of a demo in a project
+const updateTargetUrl = async (projectId, demoId,targetUrl) => {
+    try {
+        const token = getAuthToken();
+        if (!token) {
+            console.error('Authentication token not found');
+            return;
+        }
+
+        // Fetch the current project data
+        const projectData = await fetchProjectData(projectId);
+        if (!projectData) {
+            console.error('Project data not found');
+            return;
+        }
+
+        // Find the specific demo in the project data
+        const targetDemo = projectData.demos.find(demo => demo.id === demoId);
+        if (!targetDemo) {
+            console.error('Demo not found in project data');
+            return;
+        }
+
+        // Prepare the PATCH payload, updating only targetUrl
+        const patchPayload = {
+            ...targetDemo,
+            targetUrl: targetUrl
+        };
+
+        // Send PATCH request
+        const patchUrl = `https://xf6x9c9l4l.execute-api.us-east-1.amazonaws.com/projects/${projectId}/demos/${demoId}`;
+        const response = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+            },
+            body: JSON.stringify(patchPayload)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Failed to update targetUrl: ${response.status} - ${errorText}`);
+        } else {
+            console.log('targetUrl updated successfully');
+        }
+    } catch (error) {
+        console.error('Error updating targetUrl:', error);
     }
 };
 
@@ -332,6 +385,13 @@ export async function uploadAsset() {
 
         let content = await response.text()
         console.log('content from upload:', content);
+
+        const targetUrl = content.targetUrl || window.location.href;
+        //update targetUrl of demo ID using patch request
+        await updateTargetUrl(updates.projectId, updates.demoId,targetUrl)
+        
+        
+
         hideLoader();
         showPopup('Uploaded successfully', 'success');
         return { status: 'sent', message: 'Request sent in no-cors mode' };
