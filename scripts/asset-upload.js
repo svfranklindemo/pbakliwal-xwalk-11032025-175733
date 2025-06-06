@@ -386,7 +386,7 @@ export async function uploadAsset() {
         let content = await response.text()
         console.log('content from upload:', content);
 
-        const targetUrl = content.targetUrl || window.location.href;
+        const targetUrl = content.targetUrl || window.location.origin+window.location.pathname;
         //update targetUrl of demo ID using patch request
         await updateTargetUrl(updates.projectId, updates.demoId,targetUrl)
         
