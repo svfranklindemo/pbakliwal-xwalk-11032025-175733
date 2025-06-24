@@ -68,7 +68,7 @@ const fetchProjectData = async (projectId) => {
             throw new Error('Authentication token not found');
         }
 
-        const response = await fetch(`https://xf6x9c9l4l.execute-api.us-east-1.amazonaws.com/projects/${projectId}`, {
+        const response = await fetch(`https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io/projects/${projectId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json'
@@ -315,7 +315,7 @@ const updateTargetUrl = async (projectId, demoId,targetUrl) => {
         };
 
         // Send PATCH request
-        const patchUrl = `https://xf6x9c9l4l.execute-api.us-east-1.amazonaws.com/projects/${projectId}/demos/${demoId}`;
+        const patchUrl = `https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io/projects/${projectId}/demos/${demoId}`;
         const response = await fetch(patchUrl, {
             method: 'PATCH',
             headers: {

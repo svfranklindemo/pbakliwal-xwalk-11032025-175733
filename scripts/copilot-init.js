@@ -19,7 +19,7 @@ if (shouldLoadCopilot) {
                 link.id = 'copilot-editor-css';
                 link.rel = 'stylesheet';
                 link.type = 'text/css';
-                link.href = `https://${domain}/editor/editor.css`;
+                link.href = `https://${domain}/editor/editor.css?ims=explicit`;
                 link.media = 'all';
                 
                 // Handle loading errors
@@ -36,7 +36,7 @@ if (shouldLoadCopilot) {
                 const script = document.createElement('script');
                 script.id = 'copilot-editor-script';
                 script.type = 'module';
-                script.src = `https://${domain}/editor/editor.js`;
+                script.src = `https://${domain}/editor/editor.js?ims=explicit`;
                 
                 // Handle loading errors
                 script.onerror = () => console.error('Failed to load copilot script');
