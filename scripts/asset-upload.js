@@ -2,27 +2,14 @@ import { showLoader, hideLoader, showPopup } from './ui-utils.js';
 
 // Function to get the authentication token
 const getAuthToken = () => {
-    try {
-        const tokenKey = 'adobeid_ims_access_token/demo-copilot/false/AdobeID,openid';
-        const tokenData = localStorage.getItem(tokenKey);
-        
-        if (!tokenData) {
-            console.error('No token found in localStorage');
-            return null;
-        }
-
-        const parsedToken = JSON.parse(tokenData);
-        return parsedToken.tokenValue;
-    } catch (error) {
-        console.error('Error parsing token from localStorage:', error);
-        return null;
-    }
+    return window.location.search.split('ims_token=')[1];
 };
 
 // Function to get user LDAP (now returns email from IMS profile)
 const getUserLdap = async () => {
     try {
-        const token = getAuthToken();
+        //const token = getAuthToken();
+        const token = copilotApi.getIMSToken();
         if (!token) {
             throw new Error('Authentication token not found');
         }
