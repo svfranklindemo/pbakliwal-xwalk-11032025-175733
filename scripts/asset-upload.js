@@ -1,5 +1,13 @@
 import { showLoader, hideLoader, showPopup } from './ui-utils.js';
 
+const urlParams = new URLSearchParams(window.location.search);
+const shouldLoadCopilot = urlParams.has('copilot-prod');
+let demoPilotDomain = 'https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io';
+if (shouldLoadCopilot) {
+    demoPilotDomain = urlParams.get('copilot-prod') === '1' 
+            ? 'https://demo-system-zoltar-demo-pilot-deploy-ethos101-prod-23e40d.cloud.adobe.io' 
+            : 'https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io';
+}
 // Function to get the authentication token
 const getAuthToken = () => {
     return window.location.search.split('ims_token=')[1];
@@ -12,7 +20,7 @@ const getUserLdap = async () => {
         if (!token) {
             throw new Error('Authentication token not found');
         }
-        const response = await fetch('https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io/profile', {
+        const response = await fetch(`${demoPilotDomain}/profile`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -51,7 +59,7 @@ const fetchProjectData = async (projectId) => {
             throw new Error('Authentication token not found');
         }
 
-        const response = await fetch(`https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io/projects/${projectId}`, {
+        const response = await fetch(`${demoPilotDomain}/projects/${projectId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json'
@@ -298,7 +306,7 @@ const updateTargetUrl = async (projectId, demoId,targetUrl) => {
         };
 
         // Send PATCH request
-        const patchUrl = `https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io/projects/${projectId}/demos/${demoId}`;
+        const patchUrl = `${demoPilotDomain}/projects/${projectId}/demos/${demoId}`;
         const response = await fetch(patchUrl, {
             method: 'PATCH',
             headers: {
