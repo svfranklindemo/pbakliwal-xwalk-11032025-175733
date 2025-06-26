@@ -8,28 +8,24 @@ const getAuthToken = () => {
 // Function to get user LDAP (now returns email from IMS profile)
 const getUserLdap = async () => {
     try {
-        //const token = getAuthToken();
-        const token = copilotApi.getIMSToken();
+        const token = getAuthToken();
         if (!token) {
             throw new Error('Authentication token not found');
         }
-        const response = await fetch('https://ims-na1.adobelogin.com/ims/profile/v1', {
-            method: 'POST',
+        const response = await fetch('https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io/profile', {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-IMS-ClientId': 'demo-copilot',
-            },
-            body: new URLSearchParams({
-                bearer_token: token,
-            }),
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const imsProfile = await response.json();
-        return imsProfile.email.split('@')[0];
+        const profile = await response.json();
+        return profile.email.split('@')[0];
     } catch (error) {
-        console.error('Error fetching IMS profile email:', error);
+        console.error('Error fetching profile email:', error);
         return null;
     }
 };
