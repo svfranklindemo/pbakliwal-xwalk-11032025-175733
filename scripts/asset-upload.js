@@ -248,7 +248,7 @@ const getPayloadUpdates = async () => {
                 : window.location.pathname;
         return {
             projectName: targetDemo.name || "defaultName",
-            type: "xwlak-copilot-assisted",
+            type: "wknd",
             userLdap: userLdap,
             aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
             images: updates,
