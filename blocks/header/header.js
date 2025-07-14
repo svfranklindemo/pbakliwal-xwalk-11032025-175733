@@ -21,7 +21,10 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : (window.wknd.demoConfig.demoBase || '/nav');
 
-  let navURL = `${getSiteRoot(6)}${navPath}.plain.html`;
+  let navURL = `${getSiteRoot(3)}${navPath}.plain.html`;
+  if(window.location.href.includes('author') || window.location.href.includes('publish')){
+    navURL = `${getSiteRoot(6)}${navPath}.plain.html`;
+  }
   let updatedNavUrl = navURL.replace(/about-us\/|faqs\/|magazine\/.+\/|adventures\/.+\//g, "/");
 
   const resp = await fetch(updatedNavUrl.replace("//", "/"), window.location.pathname.endsWith('/nav') ? { cache: 'reload' } : {});
