@@ -21,7 +21,7 @@ export const hideLoader = () => {
 };
 
 // Create and manage popup
-export const showPopup = (message, type = 'success') => {
+export const showPopup = (message, type = 'success', autoClose = true) => {
     const popup = document.createElement('div');
     popup.id = 'status-popup';
     popup.innerHTML = `
@@ -46,10 +46,12 @@ export const showPopup = (message, type = 'success') => {
         popup.remove();
     });
 
-    // Auto-close after 5 seconds
-    setTimeout(() => {
-        if (popup && document.body.contains(popup)) {
-            popup.remove();
-        }
-    }, 5000);
+    // Auto-close after 5 seconds only if autoClose is true
+    if (autoClose) {
+        setTimeout(() => {
+            if (popup && document.body.contains(popup)) {
+                popup.remove();
+            }
+        }, 5000);
+    }
 }; 

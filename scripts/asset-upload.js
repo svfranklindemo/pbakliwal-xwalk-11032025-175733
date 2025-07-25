@@ -416,7 +416,7 @@ export async function uploadAsset() {
         
 
         hideLoader();
-        showPopup('Uploaded successfully', 'success');
+        showPopup(`Uploaded successfully<br><br><strong>New Demo URL:</strong><br><a href="${targetUrl}" target="_blank">${targetUrl}</a>`, 'success', false);
         return { status: 'sent', message: 'Request sent in no-cors mode' };
 
     } catch (error) {
