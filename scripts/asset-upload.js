@@ -9,9 +9,9 @@ if (shouldLoadCopilot) {
             : 'https://demo-system-zoltar-demo-pilot-deploy-ethos101-stag-6229b6.stage.cloud.adobe.io';
 }
 
-let env = 'production';
+let aemURL = 'https://author-p121371-e1189853.adobeaemcloud.com/';
 if (shouldLoadCopilot) {
-    env = urlParams.get('copilot-prod') === '1' ? 'production' : 'stage';
+    aemURL = urlParams.get('copilot-prod') === '1' ? 'https://author-p165802-e1765367.adobeaemcloud.com/' : 'https://author-p121371-e1189853.adobeaemcloud.com/';
 }
 // Function to get the authentication token
 const getAuthToken = () => {
@@ -256,8 +256,7 @@ const getPayloadUpdates = async () => {
             images: updates,
             demoId: targetDemo.id,
             pagePath: "/content/"+userLdap+"/"+targetDemo.id+"/us/en"+pagePathVar,
-            projectId: ids.projectId,
-            env: env
+            projectId: ids.projectId
         };
     } catch (error) {
         console.error('Error getting payload updates:', error);
