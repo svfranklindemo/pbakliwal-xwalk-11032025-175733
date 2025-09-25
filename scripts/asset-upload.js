@@ -252,7 +252,7 @@ const getPayloadUpdates = async () => {
             projectName: targetDemo.name,
             type: "wknd",
             userLdap: userLdap,
-            aemURL: "https://author-p121371-e1189853.adobeaemcloud.com/",
+            aemURL: aemURL,
             images: updates,
             demoId: targetDemo.id,
             pagePath: "/content/"+userLdap+"/"+targetDemo.id+"/us/en"+pagePathVar,
