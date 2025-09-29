@@ -108,40 +108,38 @@ const getResourceType = (pathToModify) => {
 
     // Component filters data - standardize as arrays
     const filterData = {
-      column: ["text", "image", "button", "title"],
-      "activity-details": ["activity-detail"],
-      accordion: ["accordion-item"],
-      carousel: ["card"],
-      section: ["image", "text", "title", "button"],
-      header: ["image", "text", "title", "button"],
-      footer: ["image", "text", "title", "button"],
-      cards: ["card"],
+            "column": ["text", "image", "button", "title"],
+            "activity-details": ["activity-detail"],
+            "accordion": ["accordion-item"],
+            "carousel": ["slide"],
+            "section": ["image","text","title","button"],
+            "header": ["image","text","title","button"],
+            "footer": ["image","text","title","button"]
     };
 
     // Component definition data with their resource types
     const componentData = {
-      text: "core/franklin/components/text/v1/text",
-      title: "core/franklin/components/title/v1/title",
-      image: "core/franklin/components/image/v1/image",
-      button: "core/franklin/components/button/v1/button",
-      section: "core/franklin/components/section/v1/section",
-      columns: "core/franklin/components/columns/v1/columns",
-      hero: "core/franklin/components/block/v1/block",
-      carousel: "core/franklin/components/block/v1/block",
-      card: "core/franklin/components/block/v1/block/item",
-      cards: "core/franklin/components/block/v1/block",
-      accordion: "core/franklin/components/block/v1/block",
-      "accordion-item": "core/franklin/components/block/v1/block/item",
-      teaser: "core/franklin/components/block/v1/block",
-      "featured-article": "core/franklin/components/block/v1/block",
-      "content-fragment": "core/franklin/components/block/v1/block",
-      "article-content-fragment": "core/franklin/components/block/v1/block",
-      "demo-block": "core/franklin/components/block/v1/block",
-      "workfront-reference": "core/franklin/components/block/v1/block",
-      embed: "core/franklin/components/block/v1/block",
-      blockquote: "core/franklin/components/block/v1/block",
-      "article-details": "core/franklin/components/block/v1/block",
-      "activity-detail": "core/franklin/components/block/v1/block/item",
+            "text": "core/franklin/components/text/v1/text",
+            "title": "core/franklin/components/title/v1/title",
+            "image": "core/franklin/components/image/v1/image",
+            "button": "core/franklin/components/button/v1/button",
+            "section": "core/franklin/components/section/v1/section",
+            "columns": "core/franklin/components/columns/v1/columns",
+            "hero": "core/franklin/components/block/v1/block",
+            "carousel": "core/franklin/components/block/v1/block",
+            "slide": "core/franklin/components/block/v1/block/item",
+            "accordion": "core/franklin/components/block/v1/block",
+            "accordion-item": "core/franklin/components/block/v1/block/item",
+            "teaser": "core/franklin/components/block/v1/block",
+            "featured-article": "core/franklin/components/block/v1/block",
+            "content-fragment": "core/franklin/components/block/v1/block",
+            "article-content-fragment": "core/franklin/components/block/v1/block",
+            "demo-block": "core/franklin/components/block/v1/block",
+            "workfront-reference": "core/franklin/components/block/v1/block",
+            "embed": "core/franklin/components/block/v1/block",
+            "blockquote": "core/franklin/components/block/v1/block",
+            "article-details": "core/franklin/components/block/v1/block",
+            "activity-detail": "core/franklin/components/block/v1/block/item"
     };
 
     // Get the base resource type for the component
@@ -282,7 +280,7 @@ const getPayloadUpdates = async () => {
       aemURL: aemURL,
       images: updates,
       demoId: targetDemo.id,
-      pagePath: "/content/" + targetDemo.id + "/language-masters" + pagePathVar,
+      pagePath: "/content/"+userLdap+"/"+targetDemo.id+"/us/en"+pagePathVar,
       projectId: ids.projectId,
       authToken: 'bearer '+token,
     };
