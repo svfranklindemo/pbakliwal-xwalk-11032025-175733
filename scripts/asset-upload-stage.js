@@ -269,9 +269,7 @@ const getPayloadUpdates = async () => {
       return null;
     }
 
-    const pagePathVar = window.location.pathname.endsWith("/")
-      ? "/en"
-      : window.location.pathname;
+    const pagePathVar = window.location.pathname.endsWith('/') ? '/index' : window.location.pathname;
 
     return {
       projectName: targetDemo.name,
