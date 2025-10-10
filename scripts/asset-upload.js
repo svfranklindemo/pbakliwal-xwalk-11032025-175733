@@ -195,21 +195,32 @@ const getPathToModify = (editId) => {
 // Function to process edits and create payload updates
 const processEdits = (demo) => {
     if (!demo || !demo.edits) return null;
-
-    return demo.edits.map(edit => {
-        const pathToModify = getPathToModify(edit.id);
-        
-        const resource = getResourceType(pathToModify);
-        return {
-            importedUrl: edit.sourceUrl || '',
-            pathToModify: pathToModify || edit.targetInfo.xPath || '',
-            name: edit.sourceImageId || '',
-            originalEdit: edit,
-            editId: edit.id,
-            resource: resource
-        };
+  
+    return demo.edits.map((edit) => {
+      const pathToModify = getPathToModify(edit.id);
+  
+      const resource = getResourceType(pathToModify);
+      let componentSection = "";
+      if(edit.targetInfo.xPath.contains("header")){
+        componentSection = "header";
+        pathToModify = "nav_image";
+      } else if(edit.targetInfo.xPath.contains("footer")){
+        componentSection = "footer";
+        pathToModify = "footer_image";
+      } else {
+        componentSection = "section";
+      }
+      return {
+        importedUrl: edit.sourceUrl || "",
+        pathToModify: pathToModify || edit.targetInfo.xPath || "",
+        name: edit.sourceImageId || "",
+        originalEdit: edit,
+        editId: edit.id,
+        resource: resource,
+        componentSection: componentSection
+      };
     });
-};
+  };
 
 // Function to get payload updates
 const getPayloadUpdates = async () => {
