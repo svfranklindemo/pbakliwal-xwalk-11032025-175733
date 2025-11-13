@@ -78,12 +78,15 @@ export default async function decorate($block) {
     images.forEach((img, imgIndex) => {
       const imgId = `featured-article_${index}_image_${imgIndex}`;
       img.id = imgId;
-      
-      // If image is inside a picture element, also add a data attribute to the picture
-      const picture = img.closest('picture');
-      if (picture) {
-        picture.setAttribute('data-img-id', imgId);
-      }
+    });
+
+    // Add indexed IDs to text elements
+    ['h2', 'p'].forEach((tag) => {
+      const elements = block.querySelectorAll(tag);
+      elements.forEach((el) => {
+        if(el.classList.contains('pretitle')) return;
+        el.id = `featured-article_${index}_${tag}_0`;
+      });
     });
   });
 }

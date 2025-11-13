@@ -266,13 +266,18 @@ export function decorateBlock(block) {
     images.forEach((img, imgIndex) => {
       const imgId = `${shortBlockName}_${index}_image_${imgIndex}`;
       img.id = imgId;
-      
-      // If image is inside a picture element, also add a data attribute to the picture
-      const picture = img.closest('picture');
-      if (picture) {
-        picture.setAttribute('data-img-id', imgId);
-      }
     });
+
+    const blocksWithCustomIDs = ['carousel'];
+    if (!blocksWithCustomIDs.includes(shortBlockName)) {
+      // Merge headings (h1-h6) and paragraphs into a single loop for efficiency
+      ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].forEach((tag) => {
+        const elements = block.querySelectorAll(tag);
+        elements.forEach((el, elIndex) => {
+          el.id = `${shortBlockName}_${index}_${tag}_${elIndex}`;
+        });
+      });
+    }
   });
 }
 
@@ -295,13 +300,18 @@ export function decorateDefaultBlock() {
     images.forEach((img, imgIndex) => {
       const imgId = `section_${index}_image_${imgIndex}`;
       img.id = imgId;
-      
-      // If image is inside a picture element, also add a data attribute to the picture
-      const picture = img.closest('picture');
-      if (picture) {
-        picture.setAttribute('data-img-id', imgId);
-      }
     });
+
+    const blocksWithCustomIDs = ['carousel'];
+    if (!blocksWithCustomIDs.includes(shortBlockName)) {
+      // Merge headings (h1-h6) and paragraphs into a single loop for efficiency
+      ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].forEach((tag) => {
+        const elements = block.querySelectorAll(tag);
+        elements.forEach((el, elIndex) => {
+          el.id = `section_${index}_${tag}_${elIndex}`;
+        });
+      });
+    }
   });
 }
 
